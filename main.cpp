@@ -5,7 +5,7 @@
 
 int main() {
     std::string filename;
-    std::cout << "Enter input file name: ";
+    std::cout << "Enter input filename: ";
     std::cin >> filename;
 
     std::ifstream fin(filename);
@@ -20,23 +20,28 @@ int main() {
         return 1;
     }
 
-    std::cout << "\n[1] Matrix A:\n" << A << "\nMatrix B:\n" << B;
+    // Practice 1: display both matrices
+    std::cout << "Matrix A:\n" << A << "\nMatrix B:\n" << B;
 
-    std::cout << "\n[2] A + B:\n" << (A + B);
-    std::cout << "\n[3] A * B:\n" << (A * B);
+    // Practice 2: addition via operator+
+    std::cout << "\nA + B:\n" << (A + B);
 
-    std::cout << "\n[4] Diagonal sums of A: main = " << A.mainDiagonalSum()
-              << ", secondary = " << A.secondaryDiagonalSum() << "\n";
+    // Practice 3: multiplication via operator*
+    std::cout << "\nA * B:\n" << (A * B);
 
-    std::cout << "\n[5] Swap rows of A (default 0,1):\n" << swapRows(A);
-    std::cout << "\nSwap rows of A (custom 1,3):\n" << swapRows(A, 1, 3);
+    // Practice 4: diagonal sums
+    std::cout << "\nDiagonal sums for Matrix A:\n"
+              << "Main diagonal sum: " << A.mainDiagonalSum() << "\n"
+              << "Secondary diagonal sum: " << A.secondaryDiagonalSum() << "\n";
 
-    std::cout << "\n[6] Swap columns of A (default 0,1):\n" << swapCols(A);
-    std::cout << "\nSwap columns of A (custom 0,2):\n" << swapCols(A, 0, 2);
+    // Practice 5: swap rows 0 and 2 (A itself is not modified)
+    std::cout << "\nProblem 5 - Rows 0 and 2 swapped:\n" << swapRows(A, 0, 2);
 
-    std::cout << "\n[7] Update A (defaults: row 0, col 0, value 100):\n" << updateElement(A);
-    std::cout << "\nUpdate A (row 2, col 3, value -7):\n" << updateElement(A, 2, 3, -7);
+    // Practice 6: swap columns 0 and 2
+    std::cout << "\nProblem 6 - Columns 0 and 2 swapped:\n" << swapCols(A, 0, 2);
 
-    std::cout << "\nOriginal A is unchanged:\n" << A;
+    // Practice 7: update row 1, column 2 to 99
+    std::cout << "\nProblem 7 - Updated matrix:\n" << updateElement(A, 1, 2, 99);
+
     return 0;
 }

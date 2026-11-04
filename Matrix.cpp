@@ -49,11 +49,11 @@ int Matrix::secondaryDiagonalSum() const {
 }
 
 std::ostream& operator<<(std::ostream& os, const Matrix& m) {
-    size_t width = 1;  // widest entry, so columns line up
-    for (int v : m.data) width = std::max(width, std::to_string(v).size());
+    size_t width = 4;  // widest entry + 1 space, minimum width 4, so columns line up
+    for (int v : m.data) width = std::max(width, std::to_string(v).size() + 1);
     for (int i = 0; i < m.size; ++i) {
         for (int j = 0; j < m.size; ++j)
-            os << std::setw(static_cast<int>(width) + 2) << m.get(i, j);
+            os << std::setw(static_cast<int>(width)) << m.get(i, j);
         os << '\n';
     }
     return os;
