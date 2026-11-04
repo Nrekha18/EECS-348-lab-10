@@ -2,7 +2,35 @@
 #include <algorithm>
 #include <iomanip>
 
-Matrix::Matrix(int n) : size(n), data(static_cast<size_t>(n) * n, 0) {}
+Matrix::Matrix(int n) : size(n), data(nullptr) {
+    if (size > 0) {
+        data = new int[size * size];
+        for (int i = 0; i < size * size; ++i) data[i] = 0;
+    }
+}
+
+Matrix::Matrix(const Matrix& other) : size(other.size), data(nullptr) {
+    if (size > 0) {
+        data = new int[size * size];
+        for (int i = 0; i < size * size; ++i) data[i] = other.data[i];
+    }
+}
+
+Matrix& Matrix::operator=(const Matrix& other) {
+    if (this != &other) {  // guard against self-assignment
+        int* newData = nullptr;
+        if (other.size > 0) {
+            newData = new int[other.size * other.size];
+            for (int i = 0; i < other.size * other.size; ++i) newData[i] = other.data[i];
+        }
+        delete[] data;
+        data = newData;
+        size = other.size;
+    }
+    return *this;
+}
+
+Matrix::~Matrix() { delete[] data; }
 
 void Matrix::readValues(std::istream& in) {
     for (int i = 0; i < size * size; ++i) in >> data[i];
@@ -50,7 +78,8 @@ int Matrix::secondaryDiagonalSum() const {
 
 std::ostream& operator<<(std::ostream& os, const Matrix& m) {
     size_t width = 4;  // widest entry + 1 space, minimum width 4, so columns line up
-    for (int v : m.data) width = std::max(width, std::to_string(v).size() + 1);
+    for (int i = 0; i < m.size * m.size; ++i)
+        width = std::max(width, std::to_string(m.data[i]).size() + 1);
     for (int i = 0; i < m.size; ++i) {
         for (int j = 0; j < m.size; ++j)
             os << std::setw(static_cast<int>(width)) << m.get(i, j);

@@ -3,16 +3,19 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 
 // Square N x N matrix. All data is private; access goes through public members.
 class Matrix {
 private:
     int size;
-    std::vector<int> data;  // row-major storage, hidden from users of the class
+    int* data;  // dynamically allocated row-major array, hidden from users of the class
 
 public:
+    // Constructor, and the "rule of three" because the class owns raw memory.
     Matrix(int n = 0);
+    Matrix(const Matrix& other);             // copy constructor (needed for pass-by-value)
+    Matrix& operator=(const Matrix& other);  // copy assignment
+    ~Matrix();                               // destructor frees the array
 
     int getSize() const { return size; }
     int get(int r, int c) const { return data[r * size + c]; }
